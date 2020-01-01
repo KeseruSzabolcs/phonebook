@@ -22,7 +22,7 @@ public class PhoneBookService {
         crudPhoneBook.updatePhoneBook(id, request.getLastName(), request.getFirstName(), request.getPhone());
     }
 
-    public void deletePhoneBook(Long id, CRUDPhoneBook request) throws SQLException, IOException, ClassNotFoundException {
+    public void deletePhoneBook(Long id) throws SQLException, IOException, ClassNotFoundException {
         System.out.println("Deleting contact: "+id);
         crudPhoneBook.deletePhoneBook(id);
     }
