@@ -1,4 +1,4 @@
-package org.FastTrackIt.persistance;
+package org.FastTrackIt.phonebook.persistance;
 
 import java.io.IOException;
 import java.io.InputStream;
