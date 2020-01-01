@@ -29,15 +29,16 @@ public class CRUDPhoneBook {
 
         try (Connection connection = DataBaseConfiguration.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-            preparedStatement.setString(1,lastName);
-            preparedStatement.setString(2,firstName);
-            preparedStatement.setString(3,phone);
+            preparedStatement.setString(1, lastName);
+            preparedStatement.setString(2, firstName);
+            preparedStatement.setString(3, phone);
+            preparedStatement.setLong(4, id);
 
             preparedStatement.executeUpdate();
         }
     }
     public void deletePhoneBook(long id) throws SQLException, IOException, ClassNotFoundException {
-        String sql = "DELETE phone_book_main WHERE id=?";
+        String sql = "DELETE FROM phone_book_main WHERE id=?";
 
         try (Connection connection = DataBaseConfiguration.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql)){

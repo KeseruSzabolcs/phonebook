@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/phone-book-mains")
+@WebServlet("/phone_book_mains")
 public class PhoneBookServlet extends HttpServlet {
 
     private PhoneBookService phoneBookService = new PhoneBookService();
