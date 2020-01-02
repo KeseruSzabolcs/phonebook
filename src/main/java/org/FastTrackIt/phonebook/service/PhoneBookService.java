@@ -6,6 +6,7 @@ import org.FastTrackIt.phonebook.transfer.Dto;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 
 public class PhoneBookService {
@@ -17,19 +18,29 @@ public class PhoneBookService {
         crudPhoneBook.createPhoneBook(request);
     }
 
-    public void updatePhoneBook(Long id, Dto request) throws SQLException, IOException, ClassNotFoundException {
+    public void updatePhoneBook(long id, Dto request) throws SQLException, IOException, ClassNotFoundException {
         System.out.println("Updating contact: "+ request);
         crudPhoneBook.updatePhoneBook(id, request.getLastName(), request.getFirstName(), request.getPhone());
     }
 
-    public void deletePhoneBook(Long id) throws SQLException, IOException, ClassNotFoundException {
+    public void deletePhoneBook(long id) throws SQLException, IOException, ClassNotFoundException {
         System.out.println("Deleting contact: "+id);
         crudPhoneBook.deletePhoneBook(id);
     }
 
-    public List<PhoneBook> getPhoneBook() throws SQLException, IOException, ClassNotFoundException {
+    public void deletePhoneBooks(long[] id) throws SQLException, IOException, ClassNotFoundException {
+        System.out.println("Deleting contacts: " + Arrays.toString(id));
+        crudPhoneBook.deletePhoneBooks(id);
+    }
+
+    public Dto getPhoneBook(long id) throws SQLException, IOException, ClassNotFoundException {
+        System.out.println("Getting contact " + id);
+        return crudPhoneBook.getPhoneBook(id);
+    }
+
+    public List<PhoneBook> getPhoneBooks() throws SQLException, IOException, ClassNotFoundException {
         System.out.println("Getting contacts...");
-        return crudPhoneBook.getPhoneBook();
+        return crudPhoneBook.getPhoneBooks();
     }
 
 }

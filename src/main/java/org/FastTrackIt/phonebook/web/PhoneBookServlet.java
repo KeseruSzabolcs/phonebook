@@ -2,6 +2,7 @@ package org.FastTrackIt.phonebook.web;
 
 import org.FastTrackIt.phonebook.config.ObjectMapperConfiguration;
 import org.FastTrackIt.phonebook.domain.PhoneBook;
+import org.FastTrackIt.phonebook.persistance.CRUDPhoneBook;
 import org.FastTrackIt.phonebook.service.PhoneBookService;
 import org.FastTrackIt.phonebook.transfer.Dto;
 
@@ -13,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+
+import static java.lang.Long.*;
 
 @WebServlet("/phone_book_mains")
 public class PhoneBookServlet extends HttpServlet {
@@ -39,7 +42,7 @@ public class PhoneBookServlet extends HttpServlet {
             String id = req.getParameter("id");
 
             try {
-                phoneBookService.deletePhoneBook(Long.parseLong(id));
+                phoneBookService.deletePhoneBook(parseLong(id));
             } catch (SQLException | ClassNotFoundException e) {
                 resp.sendError(500, "Internal server error: " + e.getMessage());
             }
@@ -54,7 +57,7 @@ public class PhoneBookServlet extends HttpServlet {
         Dto request = ObjectMapperConfiguration.getObjectMapper().readValue(req.getReader(), Dto.class);
 
         try {
-            phoneBookService.updatePhoneBook(Long.parseLong(id), request);
+            phoneBookService.updatePhoneBook(parseLong(id), request);
         } catch (SQLException | ClassNotFoundException e) {
             resp.sendError(500, "Internal server error: " + e.getMessage());
         }
@@ -63,18 +66,24 @@ public class PhoneBookServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         setAccessControlHeaders(resp);
-
+        String id = req.getParameter("id");
         try {
-            List<PhoneBook> phoneBooks = phoneBookService.getPhoneBook();
+            if (id != null) {
+                Dto request = phoneBookService.getPhoneBook(Long.parseLong(id));
+                String response =
+                        ObjectMapperConfiguration.getObjectMapper().writeValueAsString(request);
+                resp.getWriter().print(response);
+            } else {
+                List<PhoneBook> phoneBooks = phoneBookService.getPhoneBooks();
+                String response =
+                        ObjectMapperConfiguration.getObjectMapper().writeValueAsString(phoneBooks);
 
-            String response =
-                    ObjectMapperConfiguration.getObjectMapper().writeValueAsString(phoneBooks);
-
-            resp.getWriter().print(response);
-        } catch (SQLException | ClassNotFoundException e) {
-            resp.sendError(500, "Internal server error: " + e.getMessage());
+                resp.getWriter().print(response);
+            }
+        } catch (SQLException | ClassNotFoundException e){
+                resp.sendError(500, "Internal server error: " + e.getMessage());
+            }
         }
-    }
 
     @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
