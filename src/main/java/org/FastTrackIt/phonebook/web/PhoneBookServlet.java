@@ -36,21 +36,21 @@ public class PhoneBookServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         setAccessControlHeaders(resp);
 
-        String id = req.getParameter("id");
+            String id = req.getParameter("id");
 
-        try {
-            phoneBookService.deletePhoneBook(Long.parseLong(id));
-        } catch (SQLException | ClassNotFoundException e) {
-            resp.sendError(500, "Internal server error: " + e.getMessage());
+            try {
+                phoneBookService.deletePhoneBook(Long.parseLong(id));
+            } catch (SQLException | ClassNotFoundException e) {
+                resp.sendError(500, "Internal server error: " + e.getMessage());
+            }
         }
-    }
+
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         setAccessControlHeaders(resp);
 
         String id = req.getParameter("id");
-
         Dto request = ObjectMapperConfiguration.getObjectMapper().readValue(req.getReader(), Dto.class);
 
         try {

@@ -17,12 +17,12 @@ public class PhoneBookService {
         crudPhoneBook.createPhoneBook(request);
     }
 
-    public void updatePhoneBook(long id, Dto request) throws SQLException, IOException, ClassNotFoundException {
+    public void updatePhoneBook(Long id, Dto request) throws SQLException, IOException, ClassNotFoundException {
         System.out.println("Updating contact: "+ request);
         crudPhoneBook.updatePhoneBook(id, request.getLastName(), request.getFirstName(), request.getPhone());
     }
 
-    public void deletePhoneBook(long id) throws SQLException, IOException, ClassNotFoundException {
+    public void deletePhoneBook(Long id) throws SQLException, IOException, ClassNotFoundException {
         System.out.println("Deleting contact: "+id);
         crudPhoneBook.deletePhoneBook(id);
     }
