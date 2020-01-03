@@ -20,6 +20,6 @@ public class App {
 
         //System.out.println(phoneBooks);
         PhoneBookService phoneBookService = new PhoneBookService();
-        phoneBookService.deletePhoneBooks(new  long[]{13,14});
+        phoneBookService.deletePhoneBooks(new  long[]{16,17,18});
     }
 }

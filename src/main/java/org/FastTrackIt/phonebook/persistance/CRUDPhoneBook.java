@@ -38,12 +38,12 @@ public class CRUDPhoneBook {
         }
     }
 
-    public void deletePhoneBook(long id) throws SQLException, IOException, ClassNotFoundException {
+    public void deletePhoneBook(long[] id) throws SQLException, IOException, ClassNotFoundException {
         String sql = "DELETE FROM phone_book_main WHERE id=?";
 
         try (Connection connection = DataBaseConfiguration.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setLong(1, id);
+            preparedStatement.setLong(1, id[0]);
 
             preparedStatement.executeUpdate();
         }
