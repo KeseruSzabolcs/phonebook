@@ -2,6 +2,7 @@ package org.FastTrackIt.phonebook;
 
 import org.FastTrackIt.phonebook.domain.PhoneBook;
 import org.FastTrackIt.phonebook.persistance.CRUDPhoneBook;
+import org.FastTrackIt.phonebook.service.PhoneBookService;
 import org.FastTrackIt.phonebook.transfer.Dto;
 
 import java.io.IOException;
@@ -18,5 +19,7 @@ public class App {
         //List<PhoneBook> phoneBooks = crudPhoneBook.getPhoneBook();
 
         //System.out.println(phoneBooks);
+        PhoneBookService phoneBookService = new PhoneBookService();
+        phoneBookService.deletePhoneBooks(new  long[]{13,14});
     }
 }

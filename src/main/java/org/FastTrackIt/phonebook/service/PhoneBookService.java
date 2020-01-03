@@ -33,11 +33,6 @@ public class PhoneBookService {
         crudPhoneBook.deletePhoneBooks(id);
     }
 
-    public Dto getPhoneBook(long id) throws SQLException, IOException, ClassNotFoundException {
-        System.out.println("Getting contact " + id);
-        return crudPhoneBook.getPhoneBook(id);
-    }
-
     public List<PhoneBook> getPhoneBooks() throws SQLException, IOException, ClassNotFoundException {
         System.out.println("Getting contacts...");
         return crudPhoneBook.getPhoneBooks();

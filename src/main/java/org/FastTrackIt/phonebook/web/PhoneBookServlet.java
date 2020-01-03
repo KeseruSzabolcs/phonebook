@@ -40,9 +40,13 @@ public class PhoneBookServlet extends HttpServlet {
         setAccessControlHeaders(resp);
 
             String id = req.getParameter("id");
-
+//TODO work out delet multiple items problem from postman
             try {
-                phoneBookService.deletePhoneBook(parseLong(id));
+                if (new  long[]{parseLong(id)}.length < Long.parseLong(id)){
+                    phoneBookService.deletePhoneBook(Long.parseLong(id));
+                } else {
+                    phoneBookService.deletePhoneBooks(new long[]{Long.parseLong(id)});
+                }
             } catch (SQLException | ClassNotFoundException e) {
                 resp.sendError(500, "Internal server error: " + e.getMessage());
             }
@@ -68,18 +72,11 @@ public class PhoneBookServlet extends HttpServlet {
         setAccessControlHeaders(resp);
         String id = req.getParameter("id");
         try {
-            if (id != null) {
-                Dto request = phoneBookService.getPhoneBook(Long.parseLong(id));
-                String response =
-                        ObjectMapperConfiguration.getObjectMapper().writeValueAsString(request);
-                resp.getWriter().print(response);
-            } else {
                 List<PhoneBook> phoneBooks = phoneBookService.getPhoneBooks();
                 String response =
                         ObjectMapperConfiguration.getObjectMapper().writeValueAsString(phoneBooks);
 
                 resp.getWriter().print(response);
-            }
         } catch (SQLException | ClassNotFoundException e){
                 resp.sendError(500, "Internal server error: " + e.getMessage());
             }

@@ -61,23 +61,6 @@ public class CRUDPhoneBook {
     }
 
 
-    public Dto getPhoneBook(long id) throws SQLException, IOException, ClassNotFoundException {
-        String sql = "SELECT id, firstName, lastName, phone FROM phone_book_main WHERE id=?";
-        Dto request = new Dto();
-        try (Connection connection = DataBaseConfiguration.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-
-                request.setFirstName(resultSet.getString("firstName"));
-                request.setLastName(resultSet.getString("lastName"));
-                request.setPhone(resultSet.getString("phone"));
-            }
-            return request;
-        }
-    }
-
     public List<PhoneBook> getPhoneBooks() throws SQLException, IOException, ClassNotFoundException {
         String sql = "SELECT id, lastName, firstName, phone FROM phone_book_main";
 
