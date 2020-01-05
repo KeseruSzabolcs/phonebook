@@ -72,13 +72,14 @@ public class PhoneBookServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         setAccessControlHeaders(resp);
         String firstName=req.getParameter("firstName");
+        String lastName=req.getParameter("lastName");
         //String lastName=req.getParameter("lastName");
 
         try {
-            if(firstName != null){
-                PhoneBook contactByFirstName = phoneBookService.getContactByFirstName(firstName);
+            if(firstName != null || lastName != null) {
+                List<PhoneBook> contactByName = phoneBookService.getContactByName(firstName, lastName);
                 String response =
-                        ObjectMapperConfiguration.getObjectMapper().writeValueAsString(contactByFirstName);
+                        ObjectMapperConfiguration.getObjectMapper().writeValueAsString(contactByName);
 
                 resp.getWriter().print(response);
             }else {

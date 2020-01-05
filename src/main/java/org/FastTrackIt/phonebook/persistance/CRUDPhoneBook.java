@@ -84,20 +84,26 @@ public class CRUDPhoneBook {
         return phoneBooks;
     }
 
-    public PhoneBook getContactByFirstName(String firstName) throws SQLException, IOException, ClassNotFoundException {
-        String sql = "SELECT id, firstName, lastName, phone FROM phone_book_main WHERE firstName=?";
-        PhoneBook requestfirstName = new PhoneBook();
+    public List<PhoneBook> getContactByName(String firstName, String lastName) throws SQLException, IOException, ClassNotFoundException {
+        String sql = "SELECT id, firstName, lastName, phone FROM phone_book_main WHERE firstName=? OR lastName=?";
+        //PhoneBook requestName = new PhoneBook();
+        List<PhoneBook> phoneBooks = new ArrayList<>();
         try (Connection connection = DataBaseConfiguration.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                requestfirstName.setId(resultSet.getLong("id"));
-                requestfirstName.setFirstName(resultSet.getString("firstName"));
-                requestfirstName.setLastName(resultSet.getString("lastName"));
-                requestfirstName.setPhone(resultSet.getString("phone"));
+                PhoneBook phoneBook = new PhoneBook();
+
+                phoneBook.setId(resultSet.getLong("id"));
+                phoneBook.setFirstName(resultSet.getString("firstName"));
+                phoneBook.setLastName(resultSet.getString("lastName"));
+                phoneBook.setPhone(resultSet.getString("phone"));
+
+                phoneBooks.add(phoneBook);
             }
-            return requestfirstName;
+            return phoneBooks;
         }
     }
 
