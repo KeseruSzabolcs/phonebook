@@ -38,4 +38,8 @@ public class PhoneBookService {
         return crudPhoneBook.getPhoneBooks();
     }
 
+    public PhoneBook getContactByFirstName(String firstName) throws SQLException, IOException, ClassNotFoundException {
+        System.out.println("Getting contact by firstName");
+        return crudPhoneBook.getContactByFirstName(firstName);
+    }
 }

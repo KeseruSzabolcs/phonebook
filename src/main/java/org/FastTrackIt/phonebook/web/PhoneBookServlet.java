@@ -71,12 +71,23 @@ public class PhoneBookServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         setAccessControlHeaders(resp);
+        String firstName=req.getParameter("firstName");
+        //String lastName=req.getParameter("lastName");
+
         try {
+            if(firstName != null){
+                PhoneBook contactByFirstName = phoneBookService.getContactByFirstName(firstName);
+                String response =
+                        ObjectMapperConfiguration.getObjectMapper().writeValueAsString(contactByFirstName);
+
+                resp.getWriter().print(response);
+            }else {
                 List<PhoneBook> phoneBooks = phoneBookService.getPhoneBooks();
                 String response =
                         ObjectMapperConfiguration.getObjectMapper().writeValueAsString(phoneBooks);
 
                 resp.getWriter().print(response);
+            }
         } catch (SQLException | ClassNotFoundException e){
                 resp.sendError(500, "Internal server error: " + e.getMessage());
             }

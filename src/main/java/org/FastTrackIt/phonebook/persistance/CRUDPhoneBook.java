@@ -3,6 +3,7 @@ package org.FastTrackIt.phonebook.persistance;
 import org.FastTrackIt.phonebook.domain.PhoneBook;
 import org.FastTrackIt.phonebook.transfer.Dto;
 
+import java.awt.image.CropImageFilter;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -81,6 +82,23 @@ public class CRUDPhoneBook {
             }
         }
         return phoneBooks;
+    }
+
+    public PhoneBook getContactByFirstName(String firstName) throws SQLException, IOException, ClassNotFoundException {
+        String sql = "SELECT id, firstName, lastName, phone FROM phone_book_main WHERE firstName=?";
+        PhoneBook requestfirstName = new PhoneBook();
+        try (Connection connection = DataBaseConfiguration.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, firstName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                requestfirstName.setId(resultSet.getLong("id"));
+                requestfirstName.setFirstName(resultSet.getString("firstName"));
+                requestfirstName.setLastName(resultSet.getString("lastName"));
+                requestfirstName.setPhone(resultSet.getString("phone"));
+            }
+            return requestfirstName;
+        }
     }
 
 }
