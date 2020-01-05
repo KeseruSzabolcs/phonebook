@@ -39,7 +39,7 @@ public class PhoneBookService {
     }
 
     public List<PhoneBook> getContactByName(String firstName, String lastName) throws SQLException, IOException, ClassNotFoundException {
-        System.out.println("Getting contact by firstName");
+        System.out.println("Getting contact by Name");
         return crudPhoneBook.getContactByName(firstName, lastName);
     }
 }
