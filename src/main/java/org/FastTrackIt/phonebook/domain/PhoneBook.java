@@ -31,7 +31,7 @@ public class PhoneBook {
         this.firstName = firstName;
     }
 
-    public String getPhone() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
