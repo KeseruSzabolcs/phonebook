@@ -1,9 +1,8 @@
 package org.FastTrackIt.phonebook.persistance;
 
 import org.FastTrackIt.phonebook.domain.PhoneBook;
-import org.FastTrackIt.phonebook.transfer.Dto;
+import org.FastTrackIt.phonebook.transfer.CreatePhoneBookItemRequest;
 
-import java.awt.image.CropImageFilter;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,8 +10,8 @@ import java.util.List;
 
 public class CRUDPhoneBook {
 
-    public void createPhoneBook(Dto request) throws SQLException, IOException, ClassNotFoundException {
-        String sql = "INSERT INTO phone_book_main (lastName, firstName, phone) VALUES (?, ?, ?)";
+    public void createPhoneBook(CreatePhoneBookItemRequest request) throws SQLException, IOException, ClassNotFoundException {
+        String sql = "INSERT INTO phone_book_main (lastName, firstName, phoneNumber) VALUES (?, ?, ?)";
 
         try (Connection connection = DataBaseConfiguration.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -25,14 +24,14 @@ public class CRUDPhoneBook {
         }
     }
 
-    public void updatePhoneBook(long id, String lastName, String firstName, String phone) throws SQLException, IOException, ClassNotFoundException {
-        String sql = "UPDATE phone_book_main SET lastName=?, firstName=?, phone=? WHERE id=?";
+    public void updatePhoneBook(long id, String lastName, String firstName, String phoneNumber) throws SQLException, IOException, ClassNotFoundException {
+        String sql = "UPDATE phone_book_main SET lastName=?, firstName=?, phoneNumber=? WHERE id=?";
 
         try (Connection connection = DataBaseConfiguration.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, lastName);
             preparedStatement.setString(2, firstName);
-            preparedStatement.setString(3, phone);
+            preparedStatement.setString(3, phoneNumber);
             preparedStatement.setLong(4, id);
 
             preparedStatement.executeUpdate();
@@ -63,7 +62,7 @@ public class CRUDPhoneBook {
 
 
     public List<PhoneBook> getPhoneBooks() throws SQLException, IOException, ClassNotFoundException {
-        String sql = "SELECT id, lastName, firstName, phone FROM phone_book_main";
+        String sql = "SELECT id, lastName, firstName, phoneNumber FROM phone_book_main";
 
         List<PhoneBook> phoneBooks = new ArrayList<>();
 
@@ -76,7 +75,7 @@ public class CRUDPhoneBook {
                 phoneBook.setId(resultSet.getLong("id"));
                 phoneBook.setLastName(resultSet.getString("lastName"));
                 phoneBook.setFirstName(resultSet.getString("firstName"));
-                phoneBook.setPhone(resultSet.getString("phone"));
+                phoneBook.setPhone(resultSet.getString("phoneNumber"));
 
                 phoneBooks.add(phoneBook);
             }
@@ -85,7 +84,7 @@ public class CRUDPhoneBook {
     }
 
     public List<PhoneBook> getContactByName(String firstName, String lastName) throws SQLException, IOException, ClassNotFoundException {
-        String sql = "SELECT id, firstName, lastName, phone FROM phone_book_main WHERE firstName=? OR lastName=?";
+        String sql = "SELECT id, firstName, lastName, phoneNumber FROM phone_book_main WHERE firstName=? OR lastName=?";
         //PhoneBook requestName = new PhoneBook();
         List<PhoneBook> phoneBooks = new ArrayList<>();
         try (Connection connection = DataBaseConfiguration.getConnection();
@@ -99,7 +98,7 @@ public class CRUDPhoneBook {
                 phoneBook.setId(resultSet.getLong("id"));
                 phoneBook.setFirstName(resultSet.getString("firstName"));
                 phoneBook.setLastName(resultSet.getString("lastName"));
-                phoneBook.setPhone(resultSet.getString("phone"));
+                phoneBook.setPhone(resultSet.getString("phoneNumber"));
 
                 phoneBooks.add(phoneBook);
             }

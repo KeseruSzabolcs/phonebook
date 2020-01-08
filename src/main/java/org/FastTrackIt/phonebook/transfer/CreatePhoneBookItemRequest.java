@@ -1,6 +1,6 @@
 package org.FastTrackIt.phonebook.transfer;
 
-public class Dto {
+public class CreatePhoneBookItemRequest {
     private String lastName;
     private String firstName;
     private String phone;

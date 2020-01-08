@@ -5,7 +5,7 @@ public class PhoneBook {
     private long id;
     private String lastName;
     private String firstName;
-    private String phone;
+    private String phoneNumber;
 
     public long getId() {
         return id;
@@ -32,11 +32,11 @@ public class PhoneBook {
     }
 
     public String getPhone() {
-        return phone;
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhone(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class PhoneBook {
                 "id=" + id +
                 ", lastName='" + lastName + '\'' +
                 ", firstName='" + firstName + '\'' +
-                ", phone='" + phone + '\'' +
+                ", phone='" + phoneNumber + '\'' +
                 '}';
     }
 }

@@ -3,7 +3,7 @@ package org.FastTrackIt.phonebook.web;
 import org.FastTrackIt.phonebook.config.ObjectMapperConfiguration;
 import org.FastTrackIt.phonebook.domain.PhoneBook;
 import org.FastTrackIt.phonebook.service.PhoneBookService;
-import org.FastTrackIt.phonebook.transfer.Dto;
+import org.FastTrackIt.phonebook.transfer.CreatePhoneBookItemRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +27,7 @@ public class PhoneBookServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         setAccessControlHeaders(resp);
 
-        Dto request = ObjectMapperConfiguration.getObjectMapper().readValue(req.getReader(), Dto.class);
+        CreatePhoneBookItemRequest request = ObjectMapperConfiguration.getObjectMapper().readValue(req.getReader(), CreatePhoneBookItemRequest.class);
 
         try {
             phoneBookService.createPhoneBook(request);
@@ -59,7 +59,7 @@ public class PhoneBookServlet extends HttpServlet {
         setAccessControlHeaders(resp);
 
         String id = req.getParameter("id");
-        Dto request = ObjectMapperConfiguration.getObjectMapper().readValue(req.getReader(), Dto.class);
+        CreatePhoneBookItemRequest request = ObjectMapperConfiguration.getObjectMapper().readValue(req.getReader(), CreatePhoneBookItemRequest.class);
 
         try {
             phoneBookService.updatePhoneBook(parseLong(id), request);
